@@ -86,7 +86,7 @@ def comment_remove(request, pk):
     comment = get_object_or_404(Comment, pk=pk)
     post_pk = comment.post.pk
     comment.delete()
-    return redirect(request, 'post_detail', pk=post_pk)
+    return redirect('post_detail', pk=post_pk)
 
 
 @login_required
@@ -94,4 +94,4 @@ def comment_approve(request, pk):
     comment = get_object_or_404(Comment, pk=pk)
     post_pk = comment.post.pk
     comment.approve()
-    return redirect(request, 'post_detail', pk=post_pk)
+    return redirect('post_detail', pk=post_pk)
