@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from .models import Post, Comment
-from .forms import PostForm, CommentForm
+from .forms import PostForm, CommentForm, RegistrationForm
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
@@ -95,3 +95,18 @@ def comment_approve(request, pk):
     post_pk = comment.post.pk
     comment.approve()
     return redirect('post_detail', pk=post_pk)
+
+
+def registration_user(request):
+    if request.method == 'POST':
+        form = RegistrationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('user_login')
+    else:
+        form = RegistrationForm()
+    return render(request, 'registration/registration.html', {'form': form})
+
+
+def user_login(request, pk):
+    return render(request, 'registration/login.html')
